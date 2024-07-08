@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Journal")
+@RequestMapping("/J")
 public class jounalentrycontroller {
 @Autowired
 
