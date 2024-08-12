@@ -1,6 +1,6 @@
-package com.example.application.controller.entry.services;
+package com.example.application.Repo;
 
-import com.example.application.controller.entry.journalentry;
+import com.example.application.entry.journalentry;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

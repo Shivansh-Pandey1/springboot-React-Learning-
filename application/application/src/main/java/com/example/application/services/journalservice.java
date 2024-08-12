@@ -1,6 +1,8 @@
-package com.example.application.controller.entry.services;
+package com.example.application.services;
 
-import com.example.application.controller.entry.journalentry;
+import com.example.application.Repo.JournalRepository;
+import com.example.application.entry.User;
+import com.example.application.entry.journalentry;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,10 @@ public class journalservice {
         return journalRepository.findById(id);
     }
     public void deletebyid(ObjectId id){
+//        User user = UserService.findByUserName(userName);
+//        user.getJournalentries().rem
         journalRepository.deleteById(id);
     }
+
+
 }

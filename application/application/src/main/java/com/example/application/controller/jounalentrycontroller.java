@@ -1,7 +1,7 @@
 package com.example.application.controller;
 
-import com.example.application.controller.entry.journalentry;
-import com.example.application.controller.entry.services.journalservice;
+import com.example.application.entry.journalentry;
+import com.example.application.services.journalservice;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,21 @@ private journalservice journalservice;
     public List<journalentry> getAll(){
        return journalservice.getAll();
     }
-    
+    @PostMapping
+    public ResponseEntity<journalentry> createEntry(@RequestBody journalentry myentry){
+        try {
+            myentry.setDate(LocalDateTime.now());
+            journalservice.saveEntry(myentry);
+            return new ResponseEntity<>(myentry, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(myentry, HttpStatus.BAD_REQUEST);
+
+
+        }
+    }
+
+
     @GetMapping("id/{myid}")
     public ResponseEntity<journalentry> getJournalEntrybyid(@PathVariable ObjectId myid)
     {
@@ -32,22 +46,10 @@ private journalservice journalservice;
         return journalentryOptional.map(journalentry -> new ResponseEntity<>(journalentry,HttpStatus.OK)).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
-    @PostMapping
-    public ResponseEntity<journalentry> createEntry(@RequestBody journalentry myentry){
-       try {
-           myentry.setDate(LocalDateTime.now());
-           journalservice.saveEntry(myentry);
-           return new ResponseEntity<>(myentry, HttpStatus.CREATED);
-       }
-       catch (Exception e){
-           return new ResponseEntity<>(myentry, HttpStatus.BAD_REQUEST);
 
 
-       }
-    }
-
-@DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleteEntrybyid(@PathVariable ObjectId myId){
+@DeleteMapping("id/{userName}/{myId}")
+    public ResponseEntity<?> deleteEntrybyid(@PathVariable ObjectId myId,@PathVariable String userName){
         journalservice.deletebyid(myId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 }
